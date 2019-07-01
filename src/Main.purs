@@ -19,22 +19,20 @@ works =
     , repo : Nothing
     , language : Just "JavaScript"
     , url : "/lorem-picsum"
-    },
-    {-
+    }
   , { name : "Dust"
     , description : Nothing
     , repo : Nothing
     , language : Just "Elm"
-    , url : "/dust"
+    , url : "http://thought2.canopus.uberspace.de/builds/v4f0d7qdhl16avhjavhf5zfmcf5lp4id-dust/"
     }
   , { name : "Slot Machine"
     , description : Nothing
     , repo : Nothing
     , language : Just "PureScript"
-    , url : "/slot-machine"
+    , url : "http://thought2.canopus.uberspace.de/builds/gfxbsfm10y9b77kz4r4x20apcm1nrhz6-slot-machine/"
     }
-  , -}
-    { name : "2nd Thought"
+  , { name : "2nd Thought"
     , description : Nothing
     , repo : Nothing
     , language : Just "JavaScript"
