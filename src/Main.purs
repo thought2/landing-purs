@@ -13,13 +13,14 @@ import Ui.App as UiApp
 works :: Array UiApp.Work
 works =
   [
-    {-
+
     { name : "Lorem Picsum"
     , description : Nothing
     , repo : Nothing
     , language : Just "JavaScript"
     , url : "/lorem-picsum"
     }
+    {-
   , { name : "Dust"
     , description : Nothing
     , repo : Nothing
