@@ -19,7 +19,7 @@ works =
     , repo : Nothing
     , language : Just "JavaScript"
     , url : "/lorem-picsum"
-    }
+    },
     {-
   , { name : "Dust"
     , description : Nothing
