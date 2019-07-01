@@ -116,6 +116,57 @@ let upstream =
 
 let overrides = {=}
 
-let additions = {=}
+let additions = {
+    halogen =
+      mkPackage
+        [ "free"
+        , "ordered-collections"
+        , "console"
+        , "profunctor"
+        , "media-types"
+        , "profunctor-lenses"
+        , "fork"
+        , "halogen-vdom"
+        , "web-uievents"
+        , "coroutines"
+        , "aff"
+        , "unsafe-reference"
+        , "avar"
+        , "dom-indexed"
+        , "unsafe-coerce"
+        , "const"
+        , "freeap"
+        , "transformers"
+        , "parallel"
+        , "foreign"
+        , "nullable"
+        ]
+        "https://github.com/slamdata/purescript-halogen"
+        "v5.0.0-rc.4"
+  , halogen-vdom =
+      mkPackage
+        [ "prelude"
+        , "effect"
+        , "tuples"
+        , "web-html"
+        , "foreign-object"
+        , "maybe"
+        , "unsafe-coerce"
+        , "bifunctors"
+        , "refs"
+        , "foreign"
+        ]
+        "https://github.com/slamdata/purescript-halogen-vdom"
+        "v6.1.0"
+  ,  contravariant =
+      mkPackage
+        [ "newtype"
+        , "either"
+		, "prelude"
+		, "tuples"
+        ]
+        "https://github.com/purescript/purescript-contravariant"
+        "v4.0.1"
+}
 
 in  upstream // overrides // additions
