@@ -1,31 +1,35 @@
-{ pkgs ? import <nixpkgs> {}}:
-
+{ sources ? import ./nix/sources.nix }:
 let
-  easy-purescript = import ./easy-purescript.nix;
+  overlay = _: pkgs: {
+      inherit (import sources.easy-purescript-nix {inherit pkgs;})
+        spago purs purty;
+    };
+
+  pkgs = import sources.nixpkgs { overlays = [ overlay ] ; config = {}; };
+
   spagoPkgs = import ./spago-packages.nix { inherit pkgs; };
 in
 pkgs.stdenv.mkDerivation rec {
   name = "landing";
   src = ./.;
 
-  buildInputs = [ easy-purescript.purs ];
+  buildInputs = with pkgs; [bash spago purs purty];
 
-  buildCommand =
-  ''
+  buildCommand = ''
     BUILD_DIR=$(mktemp -d);
 
     cp -r $src/* $BUILD_DIR
 
     cd $BUILD_DIR
 
-    ${pkgs.bash}/bin/bash ${spagoPkgs.installSpagoStyle}
+    bash ${spagoPkgs.installSpagoStyle}
 
     shopt -s globstar
-    ${pkgs.bash}/bin/bash ${spagoPkgs.buildSpagoStyle} src/**/*.purs
+    bash ${spagoPkgs.buildSpagoStyle} $src/**/*.purs
 
     mkdir $out
     cp -r $src/public/* -t $out
 
-    ${easy-purescript.spago}/bin/spago bundle-app -n -s --to $out/index.js
+    spago bundle-app -n -s --to $out/index.js
   '';
 }
