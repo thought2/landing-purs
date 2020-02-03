@@ -1,7 +1,6 @@
 module Ui.App where
 
 import Prelude
-
 import Data.Maybe (Maybe(Just))
 import Data.Symbol (class IsSymbol, SProxy)
 import Halogen as H
@@ -11,32 +10,44 @@ import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
 import Prim.Row as Row
 
+type Work
+  = { name :: String
+    , description :: Maybe String
+    , language :: Maybe String
+    , repo :: Maybe String
+    , url :: String
+    }
 
+data Query a
+  = Query a
 
-type Work =
-  { name :: String
-  , description :: Maybe String
-  , language :: Maybe String
-  , repo :: Maybe String
-  , url :: String
-  }
+type State
+  = Input
 
+type Input
+  = Array Work
 
-data Query a = Query a
-type State = Input
-type Input = Array Work
-type Output = Unit
-type Slots = Unit
-type Action = Unit
-type Component = forall query input output m. H.Component HTML query Input output m
-type Html = forall action slots m. HH.ComponentHTML action slots m
+type Output
+  = Unit
+
+type Slots
+  = Unit
+
+type Action
+  = Unit
+
+type Component
+  = forall query input output m. H.Component HTML query Input output m
+
+type Html
+  = forall action slots m. HH.ComponentHTML action slots m
 
 component :: Component
 component =
   H.mkComponent
-    { initialState : identity
+    { initialState: identity
     , render
-    , eval : H.mkEval $ H.defaultEval
+    , eval: H.mkEval $ H.defaultEval
     }
 
 render :: State -> Html
@@ -52,8 +63,8 @@ renderWork :: Work -> Html
 renderWork { name, url } =
   HH.div_
     [ HH.a
-      [ HP.href url ]
-      [ HH.text name ]
+        [ HP.href url ]
+        [ HH.text name ]
     ]
 
 renderHeader :: Html
@@ -66,9 +77,9 @@ renderFooter :: Html
 renderFooter =
   HH.div_
     [ HH.span_
-      [ HH.text "by "
-      , HH.a
-        [ HP.href "mailto:me@thought2.de" ]
-        [ HH.text "Michael Bock" ]
-      ]
+        [ HH.text "by "
+        , HH.a
+            [ HP.href "mailto:me@thought2.de" ]
+            [ HH.text "Michael Bock" ]
+        ]
     ]
