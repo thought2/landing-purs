@@ -1,13 +1,13 @@
-{-
-Welcome to a Spago project!
-You can edit this file as you like.
--}
-{ name =
-    "my-project"
-, dependencies =
-    [ "effect", "console", "psci-support", "halogen", "maybe" ]
-, packages =
-    ./packages.dhall
-, sources =
-    [ "src/**/*.purs", "test/**/*.purs" ]
-}
+let src = ./src/spago.dhall
+
+let test = ./test/spago.dhall
+
+in  { name =
+        "landing-purs-all"
+    , dependencies =
+        src.dependencies # test.dependencies
+    , packages =
+        ./packages.dhall
+    , sources =
+        src.sources # test.dependencies
+    }

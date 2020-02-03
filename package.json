@@ -1,0 +1,18 @@
+{
+  "name": "landing-purs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:thought2/landing-purs.git",
+  "author": "Michael Bock <me@thought2.de>",
+  "license": "MIT",
+  "dependencies": {
+    "baseui": "^9.47.2",
+    "parcel": "^1.12.4",
+    "prettier": "^1.19.1",
+    "purescript-psa": "^0.7.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styletron-engine-atomic": "^1.4.4",
+    "styletron-react": "^5.2.6"
+  }
+}

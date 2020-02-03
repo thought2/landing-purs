@@ -1,35 +1,27 @@
-{ sources ? import ./nix/sources.nix }:
 let
-  overlay = _: pkgs: {
-      inherit (import sources.easy-purescript-nix {inherit pkgs;})
-        spago purs purty;
-    };
+  sources = import ./nix/sources.nix;
 
-  pkgs = import sources.nixpkgs { overlays = [ overlay ] ; config = {}; };
+  nixpkgs = import sources.nixpkgs { };
 
-  spagoPkgs = import ./spago-packages.nix { inherit pkgs; };
-in
-pkgs.stdenv.mkDerivation rec {
-  name = "landing";
-  src = ./.;
+  easy-purescript-nix = import sources.easy-purescript-nix { pkgs = nixpkgs; };
 
-  buildInputs = with pkgs; [bash spago purs purty];
+  yarn2nix = import sources.yarn2nix { pkgs = nixpkgs; };
 
-  buildCommand = ''
-    BUILD_DIR=$(mktemp -d);
-
-    cp -r $src/* $BUILD_DIR
-
-    cd $BUILD_DIR
-
-    bash ${spagoPkgs.installSpagoStyle}
-
-    shopt -s globstar
-    bash ${spagoPkgs.buildSpagoStyle} $src/**/*.purs
-
-    mkdir $out
-    cp -r $src/public/* -t $out
-
-    spago bundle-app -n -s --to $out/index.js
-  '';
+in import ./default-impl.nix {
+  mkDerivation = nixpkgs.stdenv.mkDerivation;
+  nixfmt = nixpkgs.nixfmt;
+  spago = easy-purescript-nix.spago;
+  writeShellScriptBin = nixpkgs.writeShellScriptBin;
+  purs = easy-purescript-nix.purs-0_13_4;
+  yarn2nix = yarn2nix;
+  yarn = nixpkgs.yarn;
+  runCommand = nixpkgs.runCommand;
+  spago2nix = easy-purescript-nix.spago2nix;
+  fetchgit = nixpkgs.fetchgit;
+  make = nixpkgs.gnumake;
+  bash = nixpkgs.bash;
+  nix-gitignore = nixpkgs.nix-gitignore;
+  dhall = nixpkgs.dhall;
+  git = nixpkgs.git;
+  nodejs = nixpkgs.nodejs;
 }
