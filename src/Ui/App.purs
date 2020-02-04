@@ -1,14 +1,11 @@
 module Ui.App where
 
 import Prelude
-import Data.Maybe (Maybe(Just))
-import Data.Symbol (class IsSymbol, SProxy)
+import Data.Maybe (Maybe)
 import Halogen as H
-import Halogen.Data.Slot (Slot)
-import Halogen.HTML (HTML(..))
+import Halogen.HTML (HTML)
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
-import Prim.Row as Row
 
 type Work
   = { name :: String
@@ -37,7 +34,7 @@ type Action
   = Unit
 
 type Component
-  = forall query input output m. H.Component HTML query Input output m
+  = forall query output m. H.Component HTML query Input output m
 
 type Html
   = forall action slots m. HH.ComponentHTML action slots m

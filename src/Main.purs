@@ -2,9 +2,7 @@ module Main where
 
 import Prelude
 import Effect (Effect)
-import Effect.Console (log)
 import Data.Maybe (Maybe(..))
-import Effect (Effect)
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
 import Ui.App as UiApp

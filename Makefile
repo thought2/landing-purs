@@ -5,9 +5,9 @@ psa := psa \
 		.spago/*/*/src/**/*.purs \
 		--is-lib=.spago \
 		--stash \
-		--censor-lib
+		--censor-lib \
+		--strict
 
-# --strict \
 
 default: check-format build check-test
 
