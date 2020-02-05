@@ -10,5 +10,6 @@ before_install:
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
   - chmod 600 ./deploy_key
+  - chmod 600 ~/.ssh/config
   - echo -e "Host stage.thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
