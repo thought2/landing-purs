@@ -1,8 +1,7 @@
 language: nix
 nix: 2.3.2
 script:
-  - hello
-  - nix-env -iA nixos.nixops
+  - nix-env -i nixops
   - nixops create -d simple src/nix/network.nix
   - nixops deploy -d simple
 before_install:
