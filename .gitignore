@@ -12,4 +12,4 @@
 .spago2nix
 /.cache
 /dist
-/result
+/resultdeploy_key
