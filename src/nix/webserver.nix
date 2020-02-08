@@ -1,13 +1,5 @@
 { pkgs }:
-let
-  webDirs = {
-    landing = import (pkgs.fetchgit {
-      url = "https://github.com/thought2/landing-purs.git";
-      rev = "5e9947ca121c571c11d87dc085177650abb89265";
-      sha256 = "1crsk540yv9qap17n95zfbl0b1i2gl9g2lk3bgpcjvpcq38mmr7i";
-    }) { inherit pkgs; };
-
-  };
+let webDirs = { landing = import ../../default.nix; };
 in {
 
   services.openssh = {
