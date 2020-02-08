@@ -2,9 +2,11 @@ module Ui.App where
 
 import Prelude
 import Data.Maybe (Maybe)
+import Halogen (ClassName(..))
 import Halogen as H
 import Halogen.HTML (HTML)
 import Halogen.HTML as HH
+import Halogen.HTML.Properties (class_)
 import Halogen.HTML.Properties as HP
 
 type Work
@@ -49,7 +51,7 @@ component =
 
 render :: State -> Html
 render works =
-  HH.div_
+  HH.div [ class_ $ ClassName "root" ]
     [ renderHeader
     , HH.div_ (map renderWork works)
     , HH.hr_
