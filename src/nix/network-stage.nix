@@ -1,5 +1,5 @@
-{ lib, ... }: {
-  webserver = {
+{
+  webserver = { lib, ... }: {
     deployment.targetHost = "stage.thought2.de";
     imports = [
       ./hardware-configuration.nix
