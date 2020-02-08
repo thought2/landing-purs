@@ -73,3 +73,6 @@ dev:
 nix-generate:
 	cd src; spago2nix generate
 	cd test; spago2nix generate
+
+travis-encryt-key:
+	travis encrypt-file ./deploy_key --add --com
