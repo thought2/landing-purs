@@ -2,8 +2,8 @@ language: nix
 nix: 2.3.2
 script:
   - nix-env -i nixops
-  - nixops create src/nix/network.nix src/nix/network-stage.nix -d simple
-  - nixops deploy -d simple
+  - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
+  - nixops deploy -d stage
 before_install:
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
     -in deploy_key.enc -out ./deploy_key -d
