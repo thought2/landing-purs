@@ -1,10 +1,7 @@
 {
   webserver = { lib, ... }: {
     deployment.targetHost = "stage.thought2.de";
-    imports = [
-      ./hardware-configuration.nix
-      <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ];
+    imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ];
     boot.loader.grub.device = "/dev/sda";
 
     boot.initrd.availableKernelModules =
