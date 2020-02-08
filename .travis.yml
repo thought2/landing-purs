@@ -2,6 +2,7 @@ language: nix
 nix: 2.3.2
 script:
   - nix-env -i nixops
+  - nixops delete --all --force
   - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
   - nixops deploy -d stage
 before_install:
