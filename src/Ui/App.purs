@@ -2,10 +2,12 @@ module Ui.App where
 
 import Prelude
 import Data.Maybe (Maybe)
+import Halogen (PropName(..))
 import Halogen as H
-import Halogen.HTML (HTML)
+import Halogen.HTML (HTML, prop)
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
+import React.DOM.Props (style)
 
 type Work
   = { name :: String
@@ -49,7 +51,7 @@ component =
 
 render :: State -> Html
 render works =
-  HH.div_
+  HH.div [ prop (PropName "style") "font-family: Arial" ]
     [ renderHeader
     , HH.div_ (map renderWork works)
     , HH.hr_
