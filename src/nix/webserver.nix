@@ -73,4 +73,11 @@ in {
     #basicAuthFile = "/etc/.htpasswd";
   };
 
+  services.nginx.virtualHosts."thought2.de" = {
+    addSSL = true;
+    enableACME = true;
+    root = webDirs.landing;
+    locations = locationsPublic;
+  };
+
 }
