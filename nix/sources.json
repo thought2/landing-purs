@@ -1,4 +1,16 @@
 {
+    "blog": {
+        "branch": "master",
+        "description": null,
+        "homepage": null,
+        "owner": "thought2",
+        "repo": "blog",
+        "rev": "2b11071cd8497dddd3f6da93fddce8de94db3e39",
+        "sha256": "0lsi31imwpzhbcspghfh89l7yh74fz3dplzmh2p3j6lp5qkd8h8r",
+        "type": "tarball",
+        "url": "https://github.com/thought2/blog/archive/2b11071cd8497dddd3f6da93fddce8de94db3e39.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "easy-purescript-nix": {
         "branch": "master",
         "description": "Easy PureScript (and other tools) with Nix",

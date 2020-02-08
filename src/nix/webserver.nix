@@ -5,6 +5,8 @@ let
 
   tuesday-coding = sources.tuesday-coding;
 
+  blog = import sources.blog;
+
   pkgs = nixpkgs;
 
 in { pkgs ? nixpkgs }:
@@ -18,7 +20,25 @@ let
         cp -r ${tuesday-coding}/2019-04-29/lorem-picsum/* -t $out
       '';
     };
+    blog = blog;
   };
+
+  mkLocation = { name, dir }: {
+    "= /${name}" = { alias = dir; };
+    "^~ /${name}/" = { alias = dir + "/"; };
+  };
+
+  locationsPublic = builtins.foldl' (x: y: x // y) { } (map mkLocation [
+    {
+      name = "lorem-picsum";
+      dir = webDirs.loremPicsum;
+    }
+    {
+      name = "blog";
+      dir = webDirs.blog;
+    }
+  ]);
+
 in {
 
   services.openssh = {
@@ -49,7 +69,7 @@ in {
     addSSL = true;
     enableACME = true;
     root = webDirs.landing;
-    #locations = locationsPublic // locationsPrivate;
+    locations = locationsPublic;
     #basicAuthFile = "/etc/.htpasswd";
   };
 
