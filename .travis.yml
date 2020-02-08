@@ -1,14 +1,14 @@
 language: nix
 nix: 2.3.2
 script:
-  - if [ "$TRAVIS_BRANCH" = "stage" ]; then bash ./deploy.sh stage; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then bash ./deploy.sh prod; fi
+- if [ "$TRAVIS_BRANCH" = "stage" ]; then bash ./deploy.sh stage; fi
+- if [ "$TRAVIS_BRANCH" = "master" ]; then bash ./deploy.sh prod; fi
 before_install:
-  - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
-    -in deploy_key.enc -out ./deploy_key -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 ./deploy_key
-  - chmod 600 ~/.ssh/config
-  - echo -e "Host stage.thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - echo -e "Host thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh-add ./deploy_key
+- openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
+  -in deploy_key.enc -out ./deploy_key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_key
+- chmod 600 ~/.ssh/config
+- echo -e "Host stage.thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- echo -e "Host thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./deploy_key
