@@ -1,5 +1,24 @@
-{ pkgs }:
-let webDirs = { landing = import ../../default.nix; };
+let
+  sources = import ../../nix/sources.nix;
+
+  nixpkgs = import sources.nixpkgs { };
+
+  tuesday-coding = sources.tuesday-coding;
+
+  pkgs = nixpkgs;
+
+in { pkgs ? nixpkgs }:
+let
+  webDirs = {
+    landing = import ../../default.nix { };
+    loremPicsum = pkgs.stdenv.mkDerivation {
+      name = "lorem-picsum";
+      buildCommand = ''
+        mkdir $out
+        cp -r ${tuesday-coding}/2019-04-29/lorem-picsum/* -t $out
+      '';
+    };
+  };
 in {
 
   services.openssh = {
