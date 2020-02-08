@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   webserver = {
     deployment.targetHost = "stage.thought2.de";
     imports = [
