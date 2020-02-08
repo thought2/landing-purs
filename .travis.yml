@@ -2,7 +2,7 @@ language: nix
 nix: 2.3.2
 script:
   - if [ "$TRAVIS_BRANCH" = "stage" ]; then bash ./deploy.sh stage; fi
-  - if [ "$TRAVIS_BRANCH" = "prod" ]; then bash ./deploy.sh prod; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then bash ./deploy.sh prod; fi
 before_install:
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
     -in deploy_key.enc -out ./deploy_key -d
