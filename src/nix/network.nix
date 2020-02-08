@@ -3,4 +3,10 @@ let
 
   nixpkgs = import sources.nixpkgs { };
 
-in import ./network-impl.nix { runCommand = nixpkgs.runCommand; }
+  pkgs = nixpkgs;
+
+in {
+  network.description = "Web server";
+
+  webserver = { config, pkgs, ... }: import ./webserver.nix { inherit pkgs; };
+}
