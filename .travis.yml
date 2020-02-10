@@ -58,6 +58,7 @@ jobs:
 
 cache:
   directories:
+    - /nix/store
     - $HOME/nix.store
 
 before_cache:
