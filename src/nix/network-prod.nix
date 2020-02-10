@@ -1,5 +1,5 @@
 {
-  webserver = {
+  webserver = { ... }: {
     deployment.targetHost = "thought2.de";
 
     boot.loader.grub.device = "/dev/sda";
