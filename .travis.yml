@@ -32,11 +32,17 @@ before_script:
 
 jobs:
   include:
+    - stage: any
+      if: branch != stage && branch != master
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+
     - stage: deploy-stage
       if: branch = stage
       script:
-        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
         - cachix push thought2 --watch-store & nixops deploy -d stage;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
 
     - stage: deploy-prod-dry
       if: branch = master && type = pull_request
