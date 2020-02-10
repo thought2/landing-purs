@@ -19,15 +19,15 @@ jobs:
         - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
 
     - stage: stage-deploy
-      if: branch = "stage"
+      if: branch = stage
       script: cachix push thought2 --watch-store & nixops deploy -d stage;
 
     - stage: prod-deploy-dry
-      if: branch = master AND type != "pr"
+      if: branch = master && type = "pull_request"
       script: cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
 
     - stage: prod-deploy
-      if: branch = master AND type = "pr"
+      if: branch = master AND type != "pull_request"
       script: cachix push thought2 --watch-store & nixops deploy -d prod;
 
 before_install:
