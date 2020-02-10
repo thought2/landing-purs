@@ -2,6 +2,7 @@ module Ui.App where
 
 import Prelude
 import Data.Maybe (Maybe)
+import Data.String as String
 import Halogen (ClassName(..))
 import Halogen as H
 import Halogen.HTML (HTML)
@@ -12,7 +13,7 @@ import Halogen.HTML.Properties as HP
 type Work
   = { name :: String
     , description :: Maybe String
-    , language :: Maybe String
+    , tags :: Array String
     , repo :: Maybe String
     , url :: String
     }
@@ -59,11 +60,15 @@ render works =
     ]
 
 renderWork :: Work -> Html
-renderWork { name, url } =
-  HH.div_
-    [ HH.a
-        [ HP.href url ]
-        [ HH.text name ]
+renderWork { name, url, tags } =
+  HH.div [ class_ $ ClassName "work" ]
+    [ HH.div_
+        [ HH.a
+            [ HP.href url ]
+            [ HH.text name ]
+        ]
+    , HH.span [ class_ $ ClassName "details" ]
+        [ HH.text $ String.joinWith ", " tags ]
     ]
 
 renderHeader :: Html

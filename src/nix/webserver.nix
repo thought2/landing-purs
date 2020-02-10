@@ -41,6 +41,8 @@ let
 
 in {
 
+  nix.binaryCaches = [ "thought2.cachix.org" ];
+
   services.openssh = {
     enable = true;
     permitRootLogin = "yes";
