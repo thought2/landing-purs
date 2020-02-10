@@ -29,21 +29,23 @@ install:
   - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
   - nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
 
-stages:
-  - name: deploy-stage
-    if: branch = stage
-    script:
-      - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
-      - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+jobs:
+  include:
+    - stage: deploy-stage
+      if: branch = stage
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
 
-      - cachix push thought2 --watch-store & nixops deploy -d stage;
-  - name: deploy-prod-dry
-    if: branch = stage
-    script:
-      - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
-      - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d stage;
 
-      - cachix push thought2 --watch-store & nixops deploy -d stage;
+    - stage: deploy-prod-dry
+      if: branch = stage
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+
+        - cachix push thought2 --watch-store & nixops deploy -d stage;
 
 cache:
   directories:
