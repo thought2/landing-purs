@@ -1,6 +1,7 @@
 language: nix
 nix: 2.3.2
 script:
+  - echo $NIX_PATH
   - nix-env -iA cachix -f https://cachix.org/api/v1/install
   - cachix use thought2
   - nix-env -i nixops
@@ -29,6 +30,7 @@ script:
       echo "PROD DEPLOYMENT";
       export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod;
     fi
+
 before_install:
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
     -in deploy_key.enc -out ./deploy_key -d
