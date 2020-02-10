@@ -3,6 +3,8 @@ nix: 2.3.2
 script:
   - echo $NIX_PATH
   - ls /home/travis/.nix-defexpr/channels
+  - cat /home/travis/.nix-defexpr/channels/manifest.nix
+  - ls /home/travis/.nix-defexpr/channels/nixpkgs
   - nix-env -iA cachix -f https://cachix.org/api/v1/install
   - cachix use thought2
   - nix-env -i nixops
