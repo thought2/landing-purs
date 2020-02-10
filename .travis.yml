@@ -25,6 +25,7 @@ install:
   - cachix use thought2
   - nix-env -i nixops
 
+before_script:
   - nixops delete --all --force
   - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
   - nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
@@ -34,18 +35,20 @@ jobs:
     - stage: deploy-stage
       if: branch = stage
       script:
-        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
         - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
-
         - cachix push thought2 --watch-store & nixops deploy -d stage;
 
     - stage: deploy-prod-dry
-      if: branch = stage
+      if: branch = master && type = pull_request
       script:
         - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
-        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
 
-        - cachix push thought2 --watch-store & nixops deploy -d stage;
+    - stage: deploy-prod-dry
+      if: branch = master && type != pull_request
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod;
 
 cache:
   directories:
@@ -53,4 +56,4 @@ cache:
 
 before_cache:
   - mkdir -p $HOME/nix.store
-  - nix copy --to file://$HOME/nix.store -f default.nix buildInputs
+  - nix copy --to file://$HOME/nix.store -f default.nix
