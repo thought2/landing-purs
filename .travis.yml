@@ -6,14 +6,21 @@ script:
     cachix use thought2
     nix-env -i nixops
     nixops delete --all --force
+    nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
+    nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
 
     if [ "$TRAVIS_BRANCH" = "stage" ]; then
-      nixops create src/nix/network.nix src/nix/network-stage.nix -d stage;
+      echo "STAGE DEPLOYMENT"
       export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d stage;
     fi
 
+    if [ "$TRAVIS_BRANCH" = "master" && $TRAVIS_PULL_REQUEST != "false" ]; then
+      echo "PROD DEPLOYMENT (DRY-RUN)"
+      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
+    fi
+
     if [ "$TRAVIS_BRANCH" = "master" && $TRAVIS_PULL_REQUEST = "false" ]; then
-      nixops create src/nix/network.nix src/nix/network-prod.nix -d prod;
+      echo "PROD DEPLOYMENT"
       export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod;
     fi
 before_install:
