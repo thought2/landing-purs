@@ -1,5 +1,5 @@
 {
-  webserver = { lib, ... }: {
+  webserver = { ... }: {
     deployment.targetHost = "thought2.de";
 
     boot.loader.grub.device = "/dev/sda";
@@ -21,7 +21,7 @@
 
     swapDevices = [ ];
 
-    nix.maxJobs = lib.mkDefault 2;
+    #nix.maxJobs = lib.mkDefault 2;
 
   };
 }

@@ -1,22 +1,8 @@
 language: nix
 nix: 2.3.2
-script:
-  - |
-    nix-env -iA cachix -f https://cachix.org/api/v1/install
-    cachix use thought2
-    nix-env -i nixops
-    nixops delete --all --force
 
-    if [ "$TRAVIS_BRANCH" = "stage" ]; then
-      nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
-      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d stage
-    fi
-
-    if [ "$TRAVIS_BRANCH" = "master" && $TRAVIS_PULL_REQUEST = "false" ]; then
-      nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
-      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod
-    fi
 before_install:
+  # SSH
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
@@ -25,3 +11,49 @@ before_install:
   - echo -e "Host stage.thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - echo -e "Host thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
+
+  # CACHE
+  - sudo mkdir -p /etc/nix
+  - echo "substituters = https://cache.nixos.org/ file://$HOME/nix.store" | sudo tee -a /etc/nix/nix.conf > /dev/null
+  - echo 'require-sigs = false' | sudo tee -a /etc/nix/nix.conf > /dev/null
+
+install:
+  - nix-channel --update nixpkgs https://nixos.org/channels/nixos-19.09
+
+  - nix-env -iA cachix -f https://cachix.org/api/v1/install
+
+  - cachix use thought2
+  - nix-env -i nixops
+
+before_script:
+  - nixops delete --all --force
+  - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
+  - nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
+
+jobs:
+  include:
+    - stage: deploy-stage
+      if: branch = stage
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d stage;
+
+    - stage: deploy-prod-dry
+      if: branch = master && type = pull_request
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
+
+    - stage: deploy-prod
+      if: branch = master && type != pull_request
+      script:
+        - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+        - cachix push thought2 --watch-store & nixops deploy -d prod;
+
+cache:
+  directories:
+    - $HOME/nix.store
+
+before_cache:
+  - mkdir -p $HOME/nix.store
+  - nix copy --to file://$HOME/nix.store -f default.nix

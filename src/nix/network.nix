@@ -8,5 +8,5 @@ let
 in {
   network.description = "Web server";
 
-  webserver = { config, pkgs, ... }: import ./webserver.nix { inherit pkgs; };
+  webserver = import ./webserver.nix { inherit pkgs; };
 }
