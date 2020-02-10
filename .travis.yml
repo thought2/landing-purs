@@ -22,7 +22,7 @@ install:
 
   - nix-env -iA cachix -f https://cachix.org/api/v1/install
 
-  - cachix use thought2
+  # - cachix use thought2
   - nix-env -i nixops
 
 before_script:
