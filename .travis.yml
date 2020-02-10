@@ -1,11 +1,7 @@
 language: nix
 nix: 2.3.2
 script:
-  - nix-channel --list
-  - echo $NIX_PATH
-  - ls /home/travis/.nix-defexpr/channels
-  - cat /home/travis/.nix-defexpr/channels/manifest.nix
-  - ls /home/travis/.nix-defexpr/channels/nixpkgs
+  - nix-channel --update nixpkgs https://nixos.org/channels/nixos-19.09
 
   - nix-env -iA cachix -f https://cachix.org/api/v1/install
   - cachix use thought2
