@@ -8,13 +8,13 @@ script:
     nixops delete --all --force
 
     if [ "$TRAVIS_BRANCH" = "stage" ]; then
-      nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
-      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d stage
+      nixops create src/nix/network.nix src/nix/network-stage.nix -d stage;
+      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d stage;
     fi
 
     if [ "$TRAVIS_BRANCH" = "master" && $TRAVIS_PULL_REQUEST = "false" ]; then
-      nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
-      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod
+      nixops create src/nix/network.nix src/nix/network-prod.nix -d prod;
+      export NIX_PATH=""; cachix push thought2 --watch-store & nixops deploy -d prod;
     fi
 before_install:
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
