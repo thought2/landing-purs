@@ -11,32 +11,8 @@ before_install:
   - echo -e "Host thought2.de\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
 
-  - nix-channel --update nixpkgs https://nixos.org/channels/nixos-19.09
-
-  - nix-env -iA cachix -f https://cachix.org/api/v1/install
-  - cachix use thought2
-  - nix-env -i nixops
-
-  - nixops delete --all --force
-  - nixops create src/nix/network.nix src/nix/network-stage.nix -d stage
-  - nixops create src/nix/network.nix src/nix/network-prod.nix -d prod
-
-  - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
-  - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
-
-jobs:
-  include:
-    - stage: prepare
-      script:
-
-    - stage: deploy-stage
-      if: branch = stage
-      script: cachix push thought2 --watch-store & nixops deploy -d stage;
-
-    - stage: deploy-prod-dry
-      if: branch = master && type = "pull_request"
-      script: cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
-
-    - stage: deploy-prod
-      if: branch = master && type = "push"
-      script: cachix push thought2 --watch-store & nixops deploy -d prod;
+script:
+  - if: 1 = 2
+    script: echo no
+  - if: 1 = 1
+    script: echo yes
