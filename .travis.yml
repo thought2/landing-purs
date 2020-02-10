@@ -2,7 +2,6 @@ language: nix
 nix: 2.3.2
 
 before_install:
-  # SSH
   - openssl aes-256-cbc -K $encrypted_6f3005cf51f5_key -iv $encrypted_6f3005cf51f5_iv
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
