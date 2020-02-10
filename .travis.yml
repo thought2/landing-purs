@@ -44,7 +44,7 @@ jobs:
         - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
         - cachix push thought2 --watch-store & nixops deploy -d prod --copy-only;
 
-    - stage: deploy-prod-dry
+    - stage: deploy-prod
       if: branch = master && type != pull_request
       script:
         - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
