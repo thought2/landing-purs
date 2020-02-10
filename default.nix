@@ -9,6 +9,8 @@ let
 
 in {
 
+pkgs ? nixpkgs,
+
 mkDerivation ? nixpkgs.stdenv.mkDerivation,
 
 nixfmt ? nixpkgs.nixfmt,
@@ -39,7 +41,9 @@ dhall ? nixpkgs.dhall,
 
 git ? nixpkgs.git,
 
-nodejs ? nixpkgs.nodejs
+nodejs ? nixpkgs.nodejs,
+
+purty ? easy-purescript-nix.purty
 
 }:
 let
@@ -62,25 +66,54 @@ let
 
   yarnModules = yarn2nix.mkYarnModules packageJsonMeta;
 
-  spagoPkgs = let
-    importSpagoPackages = path:
-      import "${path}/spago-packages.nix" {
-        pkgs = {
-          stdenv = { inherit mkDerivation; };
-          inherit fetchgit;
-          inherit runCommand;
-        };
-      };
-  in {
-    src = importSpagoPackages ./src;
-    test = importSpagoPackages ./test;
-  };
-
   cleanSrc = runCommand "src" { } ''
     mkdir $out
     cp -r ${nix-gitignore.gitignoreSource [ ] ./.}/* -t $out
+    cd $out
+    ${git}/bin/git init
+    ${git}/bin/git add --all
     ln -s ${yarnModules}/node_modules $out/node_modules
   '';
+
+  buildSrc = mkDerivation {
+    name = "src";
+    buildInputs = [ yarnPackage purs make' ];
+    buildCommand = ''
+      TMP=`mktemp -d`
+      cd $TMP
+
+      ln -s ${./Makefile} ./Makefile
+      ln -s ${./src} ./src
+      ln -s ${./public} ./public
+      ln -s ${yarnModules}/node_modules node_modules
+
+      bash ${(pkgs.callPackage ./src/spago-packages.nix { }).installSpagoStyle}
+      make build-src
+
+      mkdir $out
+      cp -r dist/* -t $out
+    '';
+  };
+
+  buildTest = mkDerivation {
+    name = "test";
+    buildInputs = [ yarnPackage purs make' nodejs ];
+    buildCommand = ''
+      TMP=`mktemp -d`
+      cd $TMP
+
+      ln -s ${./Makefile} ./Makefile
+      ln -s ${./src} ./src
+      ln -s ${./test} ./test
+
+      bash ${(pkgs.callPackage ./test/spago-packages.nix { }).installSpagoStyle}
+
+      make build-test
+      make check-test
+
+      ln -s output $out   
+    '';
+  };
 
   make' = writeShellScriptBin "make" ''
     ${make}/bin/make SHELL="${bash}/bin/bash -O globstar -O extglob" $@
@@ -89,30 +122,26 @@ let
 in mkDerivation {
   name = "landing-purs";
   shellHook = "PATH=$PATH:${yarnPackage}/bin";
-  buildInputs = [ nixfmt spago purs yarn spago2nix make' dhall git nodejs ];
+  buildInputs = [
+    yarnPackage
+    nixfmt
+    spago
+    purs
+    yarn
+    spago2nix
+    make'
+    dhall
+    git
+    nodejs
+    purty
+  ];
   buildCommand = ''
-    TMP=`mktemp -d`
-
-    cd $TMP
-
-    git init
-
-    PATH=$PATH:${yarnPackage}/bin
-
-    cp -r ${cleanSrc}/* .
+    cd ${cleanSrc}
 
     make check-format
 
-    rm -rf .spago dist output
-    bash ${spagoPkgs.test.installSpagoStyle}
-    make build-test
-    make check-test
+    ls ${buildTest}
 
-    rm -rf .spago dist output
-    bash ${spagoPkgs.src.installSpagoStyle}
-    make build-src
-
-    mkdir $out
-    cp -r dist/* -t $out
+    ln -s ${buildSrc} $out
   '';
 }
