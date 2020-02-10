@@ -37,6 +37,13 @@ stages:
       - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
 
       - cachix push thought2 --watch-store & nixops deploy -d stage;
+  - name: deploy-prod-dry
+    if: branch = stage
+    script:
+      - cachix push thought2 --watch-store & nixops deploy -d stage --build-only;
+      - cachix push thought2 --watch-store & nixops deploy -d prod --build-only;
+
+      - cachix push thought2 --watch-store & nixops deploy -d stage;
 
 cache:
   directories:
