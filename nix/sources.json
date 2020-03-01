@@ -32,7 +32,7 @@
     "rev": "69670210dfe312f0ee57c61ef02c9d49955d5032",
     "sha256": "0k14r93jw70ms4mz81h246xxj62chcdyirg0m9qdm0jx101pbsk2",
     "type": "tarball",
-    "url": "https://github.com/thought2/great-heights/archive/cb6a811223301a7a01d367a82971ba3447663969.tar.gz",
+    "url": "https://github.com/thought2/great-heights/archive/69670210dfe312f0ee57c61ef02c9d49955d5032.tar.gz",
     "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
   },
   "niv": {
