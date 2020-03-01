@@ -48,6 +48,13 @@ let
 
 in {
 
+  security.acme.acceptTerms = true;
+
+  security.acme.certs = {
+    "stage.thought2.de" = { email = "me@thought2.de"; };
+    "thought2.de" = { email = "me@thought2.de"; };
+  };
+
   nix.binaryCaches = [ "thought2.cachix.org" ];
 
   services.openssh = {
