@@ -48,15 +48,6 @@ let
 
 in {
 
-  security.acme.acceptTerms = true;
-
-  security.acme.certs = {
-    "thought2.de" = {
-      email = "me@thought2.de";
-      webroot = "/var/www/challenges";
-    };
-  };
-
   nix.binaryCaches = [ "thought2.cachix.org" ];
 
   services.openssh = {
@@ -84,16 +75,16 @@ in {
   '';
 
   services.nginx.virtualHosts."stage.thought2.de" = {
-    addSSL = true;
-    enableACME = true;
+    #addSSL = true;
+    #enableACME = true;
     root = webDirs.landing;
     locations = locationsPublic;
     #basicAuthFile = "/etc/.htpasswd";
   };
 
   services.nginx.virtualHosts."thought2.de" = {
-    addSSL = true;
-    enableACME = true;
+    #addSSL = true;
+    #enableACME = true;
     root = webDirs.landing;
     locations = locationsPublic;
   };
