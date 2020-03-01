@@ -5,6 +5,8 @@ let
 
   tuesday-coding = sources.tuesday-coding;
 
+  great-heights = sources.great-heights;
+
   blog = import sources.blog;
 
   pkgs = nixpkgs;
@@ -21,6 +23,7 @@ let
       '';
     };
     blog = blog;
+    great-heights = great-heights;
   };
 
   mkLocation = { name, dir }: {
@@ -36,6 +39,10 @@ let
     {
       name = "blog";
       dir = webDirs.blog;
+    }
+    {
+      name = "great-heights";
+      dir = webDirs.great-heights;
     }
   ]);
 
