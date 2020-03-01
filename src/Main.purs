@@ -9,7 +9,13 @@ import Ui.App as UiApp
 
 works :: Array UiApp.Work
 works =
-  [ { name: "Lorem Picsum"
+  [ { name: "Great Heights"
+    , description: Nothing
+    , repo: Nothing
+    , tags: [ "TypeScript", "Three" ]
+    , url: "/great-heights/"
+    }
+  , { name: "Lorem Picsum"
     , description: Nothing
     , repo: Nothing
     , tags: [ "JavaScript" ]
