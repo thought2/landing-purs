@@ -5,7 +5,7 @@ let
 
   tuesday-coding = sources.tuesday-coding;
 
-  great-heights = sources.great-heights;
+  great-heights = import sources.great-heights { };
 
   blog = import sources.blog;
 
