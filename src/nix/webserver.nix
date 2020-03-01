@@ -51,8 +51,10 @@ in {
   security.acme.acceptTerms = true;
 
   security.acme.certs = {
-    "stage.thought2.de" = { email = "me@thought2.de"; };
-    "thought2.de" = { email = "me@thought2.de"; };
+    "thought2.de" = {
+      email = "me@thought2.de";
+      webroot = "/var/www/challenges";
+    };
   };
 
   nix.binaryCaches = [ "thought2.cachix.org" ];
