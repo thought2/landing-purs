@@ -23,6 +23,18 @@
     "url": "https://github.com/justinwoo/easy-purescript-nix/archive/01ae1bc844a4eed1af7dfbbb202fdd297e3441b9.tar.gz",
     "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
   },
+  "great-heights": {
+    "branch": "master",
+    "description": null,
+    "homepage": null,
+    "owner": "thought2",
+    "repo": "great-heights",
+    "rev": "7789f7b52448688bdd0d3cc43175246c127d031a",
+    "sha256": "0lbhs59j8zjypbbwi1df5m6ikix7lkj83lizw4qvni24vgaz5kzw",
+    "type": "tarball",
+    "url": "https://github.com/thought2/great-heights/archive/7789f7b52448688bdd0d3cc43175246c127d031a.tar.gz",
+    "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+  },
   "niv": {
     "branch": "master",
     "description": "Easy dependency management for Nix projects",

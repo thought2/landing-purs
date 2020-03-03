@@ -5,6 +5,8 @@ let
 
   tuesday-coding = sources.tuesday-coding;
 
+  great-heights = import sources.great-heights { };
+
   blog = import sources.blog;
 
   pkgs = nixpkgs;
@@ -21,6 +23,7 @@ let
       '';
     };
     blog = blog;
+    great-heights = great-heights;
   };
 
   mkLocation = { name, dir }: {
@@ -36,6 +39,10 @@ let
     {
       name = "blog";
       dir = webDirs.blog;
+    }
+    {
+      name = "great-heights";
+      dir = webDirs.great-heights;
     }
   ]);
 
@@ -68,16 +75,16 @@ in {
   '';
 
   services.nginx.virtualHosts."stage.thought2.de" = {
-    addSSL = true;
-    enableACME = true;
+    #addSSL = true;
+    #enableACME = true;
     root = webDirs.landing;
     locations = locationsPublic;
     #basicAuthFile = "/etc/.htpasswd";
   };
 
   services.nginx.virtualHosts."thought2.de" = {
-    addSSL = true;
-    enableACME = true;
+    #addSSL = true;
+    #enableACME = true;
     root = webDirs.landing;
     locations = locationsPublic;
   };
