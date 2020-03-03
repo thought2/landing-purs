@@ -29,10 +29,10 @@
     "homepage": null,
     "owner": "thought2",
     "repo": "great-heights",
-    "rev": "76f973846bdb8bfa6457b558c758d43e3cc21dd8",
-    "sha256": "14fvciaclbmikga1wzrfxdmz3jv1qq20pilbd9ayj6m9h0cp4y6k",
+    "rev": "7789f7b52448688bdd0d3cc43175246c127d031a",
+    "sha256": "0lbhs59j8zjypbbwi1df5m6ikix7lkj83lizw4qvni24vgaz5kzw",
     "type": "tarball",
-    "url": "https://github.com/thought2/great-heights/archive/76f973846bdb8bfa6457b558c758d43e3cc21dd8.tar.gz",
+    "url": "https://github.com/thought2/great-heights/archive/7789f7b52448688bdd0d3cc43175246c127d031a.tar.gz",
     "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
   },
   "niv": {
